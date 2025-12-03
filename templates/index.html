@@ -12,6 +12,7 @@
     <div class="container">
         <h1>OTP Verification</h1>
         <form method="POST">
+            <input type="hidden" name="generated" value="{{ password }}">
             <input type="number" name="user_input" placeholder="Enter OTP" required>
             <button type="submit">Submit</button>
         </form>
