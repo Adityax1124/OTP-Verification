@@ -79,3 +79,17 @@ input[type=number]::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield; /* Firefox */
 }
+
+@media (max-width: 600px) {
+    .password-box {
+        top: 5px;
+        right: 5px;
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        margin: 50px 10px;
+        padding: 20px;
+    }
+}
