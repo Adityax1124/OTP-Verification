@@ -3,19 +3,29 @@ import random
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        user_input = request.form.get("password")
-        generated_password = request.form.get("generated")  # Get the hidden password
-        if user_input and int(user_input) == int(generated_password):
-            return redirect("/verified")
-    # Generate new password for GET request
-    password = random.randint(100000, 999999)
-    return render_template("index.html", password=password)
+# Store password globally (reset each page load)
+password = random.randint(100000, 999999)
 
-@app.route("/verified")
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    global password
+    if request.method == 'POST':
+        user_input = request.form.get('password')
+        if user_input and user_input.isdigit() and int(user_input) == password:
+            return redirect(url_for('verified'))
+        else:
+            return render_template('index.html', password=password, error="Invalid Password")
+    
+    # Refresh password each page load
+    password = random.randint(100000, 999999)
+    return render_template('index.html', password=password)
+
+@app.route('/verified')
 def verified():
-    return render_template("verified.html")
+    return render_template('verified.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
 
 
